@@ -93,5 +93,22 @@ function suggestAccounts() {
         }
     };
 
-    Xrm.Page.getControl("data8_name").addOnKeyPress(keyPressFcn);
+
+    var control = Xrm.Page.getControl("data8_name");
+    var attr = Xrm.Page.getAttribute("data8_name");
+    var selectedAccountAttr = Xrm.Page.getAttribute("data8_selectedaccount");
+    var codeAttr = Xrm.Page.getAttribute("data8_code");
+
+    control.addOnKeyPress(keyPressFcn);
+
+    // When the value changes, copy the value from the attribute into the "Selected Account" attribute
+    attr.addOnChange(function () {
+        selectedAccountAttr.setValue(attr.getValue());
+
+        // Update the "Code" attribute with the code related to the account
+        accounts.forEach(function (account) {
+            if (account.name === attr.getValue())
+                codeAttr.setValue(account.code);
+        });
+    });
 }
