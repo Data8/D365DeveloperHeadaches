@@ -93,5 +93,14 @@ function suggestAccounts() {
         }
     };
 
-    Xrm.Page.getControl("data8_name").addOnKeyPress(keyPressFcn);
+    var control = Xrm.Page.getControl("data8_name");
+    var attr = Xrm.Page.getAttribute("data8_name");
+    var selectedAccountAttr = Xrm.Page.getAttribute("data8_selectedaccount");
+
+    control.addOnKeyPress(keyPressFcn);
+
+    // When the value changes, copy the value from the attribute into the "Selected Account" attribute
+    attr.addOnChange(function () {
+        selectedAccountAttr.setValue(attr.getValue());
+    });
 }
