@@ -47,6 +47,9 @@ namespace MergingDemo
             Console.WriteLine("(Re)load in account");
             var oldAccount = org.Retrieve(a2.LogicalName, a2.Id, new ColumnSet("name", "primarycontactid"));
 
+            var primaryContactRef = oldAccount.GetAttributeValue<EntityReference>("primarycontactid");
+            primaryContactRef.Name = null;
+
             try
             {
                 var mergeReq = new MergeRequest()
@@ -68,6 +71,10 @@ namespace MergingDemo
                 org.Delete(c1.LogicalName, c1.Id);
                 throw;
             }
+
+            org.Delete(a1.LogicalName, a1.Id);
+            org.Delete(a2.LogicalName, a2.Id);
+            org.Delete(c1.LogicalName, c1.Id);
         }
     }
 }
