@@ -2,16 +2,16 @@
     <head>
     </head>
     <body>
-        <button onclick="countContacts()">Count Contacts (01)</button>
+        <button onclick="countContacts()">Count Contacts (Action!)</button>
 
         <script type="text/javascript">
             Xrm = window.parent.Xrm;
             var webApiUrl = Xrm.Page.context.getClientUrl() + "/api/data/v8.2/";
             function countContacts() {
-                var qry = "contacts?$filter=" + encodeURIComponent("parentcustomerid_account/accountid eq '" + Xrm.Page.data.entity.getId() + "'");
+                var qry = "accounts(" + Xrm.Page.data.entity.getId().substring(1,37) + ")/Microsoft.Dynamics.CRM.data8_CountContacts";
                 var url = webApiUrl + qry;
                 var req = new XMLHttpRequest();
-                req.open("GET", url);
+                req.open("POST", url);
                 req.setRequestHeader("Accept", "application/json");
                 req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                 req.setRequestHeader("OData-MaxVersion", "4.0");
@@ -19,10 +19,13 @@
                 req.onreadystatechange = function () {
                     if (this.readyState === 4 && this.status === 200) {
                         var result = JSON.parse(this.response);
-                        Xrm.Utility.alertDialog(result.value.length.toString() + " contacts");
+                        Xrm.Utility.alertDialog(result["TotalCount"] + " contact(s)");
+                    }
+                    if (this.readyState === 4 && this.status === 204) {
+                        Xrm.Utility.alertDialog("WebResponse 204 - No content");
                     }
                 }
-                req.send();
+                req.send(JSON.stringify({}));
             }
         </script>
     </body>
