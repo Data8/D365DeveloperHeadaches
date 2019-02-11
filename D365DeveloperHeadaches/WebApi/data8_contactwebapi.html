@@ -2,13 +2,13 @@
     <head>
     </head>
     <body>
-        <button onclick="countContacts()">Count Contacts</button>
+        <button onclick="countContacts()">Count Contacts (04)</button>
 
         <script type="text/javascript">
             Xrm = window.parent.Xrm;
             var webApiUrl = Xrm.Page.context.getClientUrl() + "/api/data/v8.2/";
             function countContacts() {
-                var qry = "contacts?$filter=" + encodeURIComponent("parentcustomerid/accountid eq '" + Xrm.Page.data.entity.getId() + "'");
+                var qry = "accounts(" + Xrm.Page.data.entity.getId().replace("{", "").replace("}", "") + ")?$expand=contact_customer_accounts($select=fullname)";
                 var url = webApiUrl + qry;
                 var req = new XMLHttpRequest();
                 req.open("GET", url);
@@ -19,11 +19,12 @@
                 req.onreadystatechange = function () {
                     if (this.readyState === 4 && this.status === 200) {
                         var result = JSON.parse(this.response);
-                        Xrm.Utility.alertDialog(result.value.length.toString() + " contacts");
+                        Xrm.Utility.alertDialog(result.contact_customer_accounts.length.toString() + " contacts");
                     }
                 }
                 req.send();
             }
         </script>
+
     </body>
 </html>
