@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 
 namespace MetadataDemo
@@ -13,16 +14,23 @@ namespace MetadataDemo
     {
         static void Main(string[] args)
         {
+            //https://crmserver2015.crm.data-8.co.uk/SummitEMEA2019/tools/systemcustomization/attributes/manageAttribute.aspx?appSolutionId=%7b6BDEA0EC-7528-E911-80F1-00155D007101%7d&attributeId=%7bFB468DCD-0C2E-E911-80F1-00155D007101%7d&entityId=%7b9ec65306-082e-e911-80f1-00155d007101%7d 
+
             var crmSvc = new CrmServiceClient(ConfigurationManager.ConnectionStrings["CRMUGDemo"].ConnectionString);
             var org = crmSvc.OrganizationServiceProxy;
 
-            var newRecord = new Entity("data8_metadata")
+            var existingRecordsQry = new QueryExpression("data8_metadata")
             {
-                ["data8_thealphabet"] = "abcdefghijklmnopqrstuvwxyz"
+                ColumnSet = new ColumnSet("data8_name", "data8_thealphabet"),
+                
             };
+            existingRecordsQry.Criteria.AddCondition("data8_thealphabet", ConditionOperator.Equal, "abcdefghijklmnopqrstuvwxyz");
+            var existingRecordsResp = org.RetrieveMultiple(existingRecordsQry);
+            Console.WriteLine($"{existingRecordsResp.TotalRecordCount} records found");
 
-            newRecord.Id = org.Create(newRecord);
-            Console.WriteLine($"Record created ({newRecord.Id})");
+            var firstMatch = existingRecordsResp.Entities.First();
+            firstMatch["data8_name"] = "A new name";
+            org.Update(firstMatch);
         }
     }
 }
