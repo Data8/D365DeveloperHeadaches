@@ -2,13 +2,13 @@
     <head>
     </head>
     <body>
-        <button onclick="countContacts()">Count Contacts</button>
+        <button onclick="countContacts()">Count Contacts (02)</button>
 
         <script type="text/javascript">
             Xrm = window.parent.Xrm;
             var webApiUrl = Xrm.Page.context.getClientUrl() + "/api/data/v8.2/";
             function countContacts() {
-                var qry = "contacts?$filter=" + encodeURIComponent("parentcustomerid/accountid eq '" + Xrm.Page.data.entity.getId() + "'");
+                var qry = "contacts?$filter=" + encodeURIComponent("parentcustomerid_account/accountid eq " + Xrm.Page.data.entity.getId().replace("{", "").replace("}", ""));
                 var url = webApiUrl + qry;
                 var req = new XMLHttpRequest();
                 req.open("GET", url);
