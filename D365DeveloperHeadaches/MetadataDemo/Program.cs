@@ -14,23 +14,59 @@ namespace MetadataDemo
     {
         static void Main(string[] args)
         {
-            //https://crmserver2015.crm.data-8.co.uk/SummitEMEA2019/tools/systemcustomization/attributes/manageAttribute.aspx?appSolutionId=%7b6BDEA0EC-7528-E911-80F1-00155D007101%7d&attributeId=%7bFB468DCD-0C2E-E911-80F1-00155D007101%7d&entityId=%7b9ec65306-082e-e911-80f1-00155d007101%7d 
-
             var crmSvc = new CrmServiceClient(ConfigurationManager.ConnectionStrings["CRMUGDemo"].ConnectionString);
             var org = crmSvc.OrganizationServiceProxy;
 
-            var existingRecordsQry = new QueryExpression("data8_metadata")
-            {
-                ColumnSet = new ColumnSet("data8_name", "data8_thealphabet"),
-                
-            };
-            existingRecordsQry.Criteria.AddCondition("data8_thealphabet", ConditionOperator.Equal, "abcdefghijklmnopqrstuvwxyz");
-            var existingRecordsResp = org.RetrieveMultiple(existingRecordsQry);
-            Console.WriteLine($"{existingRecordsResp.TotalRecordCount} records found");
+            var existingRecordsQry1 = new QueryExpression("data8_metadata") { ColumnSet = new ColumnSet("data8_name", "data8_thealphabet") };
+            existingRecordsQry1.Criteria.AddCondition("data8_thealphabet", ConditionOperator.Equal, "abcdefghijklmnopqrstuvwxyz");
+            var existingRecordsResp1 = org.RetrieveMultiple(existingRecordsQry1);
+            Console.WriteLine($"{existingRecordsResp1.Entities.Count} records found");
 
-            var firstMatch = existingRecordsResp.Entities.First();
-            firstMatch["data8_name"] = "A new name";
-            org.Update(firstMatch);
+            var alphabetRecord = existingRecordsResp1.Entities.First();
+            alphabetRecord["data8_name"] = "A new name";
+
+            var existingRecordsQry2 = new QueryExpression("data8_metadata") { ColumnSet = new ColumnSet("data8_name", "data8_themagicnumber") };
+            existingRecordsQry2.Criteria.AddCondition("data8_themagicnumber", ConditionOperator.Equal, 7);
+            var existingRecordsResp2 = org.RetrieveMultiple(existingRecordsQry2);
+            Console.WriteLine($"{existingRecordsResp2.Entities.Count} records found");
+
+            var numberRecord = existingRecordsResp2.Entities.First();
+            numberRecord["data8_name"] = "A new name";
+
+            var existingRecordsQry3 = new QueryExpression("data8_metadata") { ColumnSet = new ColumnSet("data8_name", "data8_therating") };
+            existingRecordsQry3.Criteria.AddCondition("data8_therating", ConditionOperator.Equal, 888880002);
+            var existingRecordsResp3 = org.RetrieveMultiple(existingRecordsQry3);
+            Console.WriteLine($"{existingRecordsResp3.Entities.Count} records found");
+
+            var wrongRatingRecord = existingRecordsResp3.Entities.First();
+            wrongRatingRecord["data8_name"] = "A new name";
+
+            try
+            {
+                org.Update(alphabetRecord);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating alphabet record{Environment.NewLine}{ex}");
+            }
+
+            try
+            {
+                org.Update(numberRecord);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating magic number record{Environment.NewLine}{ex}");
+            }
+
+            try
+            {
+                org.Update(wrongRatingRecord);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating rating record{Environment.NewLine}{ex}");
+            }
         }
     }
 }
