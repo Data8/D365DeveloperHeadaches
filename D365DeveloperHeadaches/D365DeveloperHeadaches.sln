@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoComplete", "AutoComplet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{387582BF-2919-4D56-B088-C83E180F0A3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnifiedInterface", "UnifiedInterface\UnifiedInterface.csproj", "{59A8B71A-DC33-49E8-B5EA-8126CB6555AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{387582BF-2919-4D56-B088-C83E180F0A3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{387582BF-2919-4D56-B088-C83E180F0A3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{387582BF-2919-4D56-B088-C83E180F0A3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59A8B71A-DC33-49E8-B5EA-8126CB6555AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59A8B71A-DC33-49E8-B5EA-8126CB6555AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59A8B71A-DC33-49E8-B5EA-8126CB6555AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59A8B71A-DC33-49E8-B5EA-8126CB6555AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

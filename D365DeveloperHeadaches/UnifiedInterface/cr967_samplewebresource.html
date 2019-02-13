@@ -1,0 +1,17 @@
+﻿<html>
+    <head>
+    </head>
+<body>
+    <h1>I am a WebResource</h1>
+    <button onclick="openWebResource()">Open new WebResource</button>
+
+<script type="text/javascript">
+    Xrm = window.parent.Xrm;
+
+    function openWebResource() {
+        var windowOptions = { height: 500, width: 500}
+        var window = Xrm.Utility.openWebResource("cr967_samplebiggerwebresource", windowOptions);
+    }
+</script>
+</body>
+</html>
