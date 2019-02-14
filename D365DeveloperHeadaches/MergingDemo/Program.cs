@@ -18,7 +18,6 @@ namespace MergingDemo
             var crmSvc = new CrmServiceClient(ConfigurationManager.ConnectionStrings["CRMUGDemo"].ConnectionString);
             var org = crmSvc.OrganizationServiceProxy;
 
-            #region MakeRecords
             var c1 = new Entity("contact")
             {
                 ["firstname"] = "Sample",
@@ -41,7 +40,6 @@ namespace MergingDemo
             };
             a2.Id = org.Create(a2);
 
-#endregion
             Console.WriteLine("Records created");
 
             Console.WriteLine("(Re)load in account");
