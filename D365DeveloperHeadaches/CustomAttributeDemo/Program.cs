@@ -18,9 +18,8 @@ namespace CustomAttributeDemo
         {
             var crmSvc = new CrmServiceClient(ConfigurationManager.ConnectionStrings["CRMUGDemo"].ConnectionString);
             var org = crmSvc.OrganizationServiceProxy;
-            var account = new Entity("account") { ["name"] = "Demo Account" };
-            
-
+            Entity account = null;
+                        
             Console.WriteLine("Connected...");
 
             var createAttrReq = new CreateAttributeRequest()
@@ -43,6 +42,7 @@ namespace CustomAttributeDemo
                 Console.WriteLine("Attr created");
 
                 Console.WriteLine("Creating Account");
+                account = new Entity("account") { ["name"] = "Demo Account" };
                 account.Id = org.Create(account);
                 Console.WriteLine($"Account created (ID: {account.Id}");
 
