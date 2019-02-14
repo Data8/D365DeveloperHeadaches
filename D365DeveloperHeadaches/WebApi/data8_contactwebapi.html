@@ -8,7 +8,7 @@
             Xrm = window.parent.Xrm;
             var webApiUrl = Xrm.Page.context.getClientUrl() + "/api/data/v8.2/";
             function countContacts() {
-                var qry = "contacts?$filter=" + encodeURIComponent("parentcustomerid/accountid eq '" + Xrm.Page.data.entity.getId() + "'");
+                var qry = "contact?$filter=" + encodeURIComponent("parentcustomerid/accountid eq '" + Xrm.Page.data.entity.getId() + "'");
                 var url = webApiUrl + qry;
                 var req = new XMLHttpRequest();
                 req.open("GET", url);
